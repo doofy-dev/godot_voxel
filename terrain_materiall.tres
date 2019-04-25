@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+
+varying vec3 vBC;
+void vertex(){
+    vBC = vec3(VERTEX)*0.0010f;
+}
+
+float edgeFactor(){
+    vec3 d = fwidth(vBC);
+    vec3 a3 = smoothstep(vec3(0.0), d*1.5, vBC);
+    return min(min(a3.x, a3.y), a3.z);
+}
+
+void fragment(){
+	ALBEDO = vec3(0.0, 0.0, (1.0-edgeFactor())*0.95);	
+}"
+
+[resource]
+shader = SubResource( 1 )
+
